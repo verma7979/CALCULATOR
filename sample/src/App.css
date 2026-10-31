@@ -1,0 +1,84 @@
+:root {
+  --bg: #e9ecf1; --surface: #fbfcfd; --key: #e3e7ee; --key-hi: #d6dbe5; --key-sci: #eef1f5;
+  --fg: #1b1f29; --muted: #687084; --line: #d3d8e1;
+  --accent: #2f45c4; --accent-soft: #e0e5fb; --on-accent: #fff; --danger: #b4362b;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #13151a; --surface: #1c1f26; --key: #272b34; --key-hi: #323743; --key-sci: #22252d;
+    --fg: #e8eaf0; --muted: #959cad; --line: #2f343e;
+    --accent: #8090ff; --accent-soft: #262c4d; --on-accent: #0d1020; --danger: #ff8a7d;
+  }
+}
+
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: system-ui, sans-serif; }
+#root { max-width: none; padding: 0; text-align: left; border: 0; }
+
+.wrap {
+  display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; align-items: flex-start;
+  max-width: 820px; margin: 0 auto; padding: 32px 16px;
+}
+
+.calc {
+  flex: 1 1 340px; max-width: 420px; min-width: 0; background: var(--surface); border-radius: 22px;
+  padding: 18px; box-shadow: 0 12px 32px -12px rgba(20, 30, 60, .25);
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.screen { min-height: 130px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; gap: 4px; padding: 8px 8px 4px; }
+.status { align-self: flex-start; display: flex; gap: 8px; font-size: .7rem; font-weight: 700; letter-spacing: .1em; color: var(--accent); }
+.expr, .result {
+  width: 100%; text-align: right; white-space: nowrap; overflow-x: auto; scrollbar-width: none;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums;
+}
+.expr::-webkit-scrollbar, .result::-webkit-scrollbar { display: none; }
+.expr { font-size: 1.9rem; }
+.expr.small { font-size: 1rem; color: var(--muted); }
+.ghost { color: var(--muted); opacity: .45; }
+.result { font-size: 2.4rem; font-weight: 500; min-height: 1.2em; }
+.result.preview { font-size: 1.1rem; color: var(--muted); font-weight: 400; }
+.result.err { color: var(--danger); font-size: 1.05rem; font-family: inherit; font-weight: 600; }
+
+.sci { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+.key {
+  border: 0; border-radius: 14px; height: 58px; cursor: pointer; padding: 0;
+  background: var(--key); color: var(--fg); font-size: 1.3rem;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  transition: background .12s, transform .08s;
+}
+.key:hover { background: var(--key-hi); }
+.key:active { transform: scale(.96); }
+.key:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.key.sm { height: 42px; font-size: .95rem; border-radius: 10px; background: var(--key-sci); }
+.key.sm:hover { background: var(--key-hi); }
+.key.fn { color: var(--muted); font-weight: 700; font-size: 1rem; }
+.key.op { background: var(--accent-soft); color: var(--accent); font-size: 1.5rem; }
+.key.eq { background: var(--accent); color: var(--on-accent); font-size: 1.5rem; }
+.key.toggle { font-family: system-ui, sans-serif; font-weight: 700; font-size: .85rem; color: var(--accent); }
+.key.toggle.on { background: var(--accent); color: var(--on-accent); }
+
+.tape {
+  flex: 1 1 260px; max-width: 380px; min-width: 0; background: var(--surface); border-radius: 12px;
+  box-shadow: 0 12px 32px -12px rgba(20, 30, 60, .25);
+}
+.tape-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px dashed var(--line); }
+.tape-head h2 { margin: 0; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.linkbtn { border: 0; background: none; color: var(--accent); font-weight: 600; cursor: pointer; padding: 4px; }
+.linkbtn:disabled { opacity: .4; cursor: default; }
+.tape ul { list-style: none; margin: 0; padding: 4px 0; max-height: 520px; overflow-y: auto; }
+.tape li button {
+  width: 100%; border: 0; background: none; color: var(--fg); cursor: pointer; text-align: right;
+  padding: 10px 18px; display: flex; flex-direction: column; gap: 2px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+.tape li button:hover { background: var(--accent-soft); }
+.e-expr { color: var(--muted); font-size: .85rem; overflow-wrap: anywhere; }
+.e-res { font-size: 1.1rem; overflow-wrap: anywhere; }
+.empty { padding: 24px 18px; color: var(--muted); text-align: center; }
+
+@media (max-width: 400px) {
+  .key { height: 52px; }
+  .key.sm { height: 40px; font-size: .85rem; }
+}
